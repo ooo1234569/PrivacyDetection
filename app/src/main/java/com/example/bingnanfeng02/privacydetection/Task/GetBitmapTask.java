@@ -15,7 +15,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.example.bingnanfeng02.privacydetection.Data;
 import com.example.bingnanfeng02.privacydetection.data.Bbox;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.io.File;
@@ -55,8 +59,6 @@ public class GetBitmapTask  extends AsyncTask {
         paint.setStrokeWidth(12.5f/size);
         paint.setTextSize(100/size);
         canvas=new Canvas(bitmap);
-        Log.d("tag",url);
-
     }
     @Override
     protected void onPreExecute() {
@@ -76,9 +78,9 @@ public class GetBitmapTask  extends AsyncTask {
                 .addFormDataPart("image", "a.jpg", requestBody)
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-               // .readTimeout(10, TimeUnit.SECONDS)
-                //.connectTimeout(10, TimeUnit.SECONDS)
-                //.writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(1000, TimeUnit.SECONDS)
+                .connectTimeout(1000, TimeUnit.SECONDS)
+                .writeTimeout(1000, TimeUnit.SECONDS)
                 .build();
         Request request = new Request.Builder()
                 .url(url)
@@ -86,31 +88,28 @@ public class GetBitmapTask  extends AsyncTask {
                 .build();
         try {
             Response response=okHttpClient.newCall(request).execute();
-            Log.d("ss",response.toString());
+            String s=response.body().string();
+            parseJson(s);
+            Log.d("json",s);
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        okHttpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                  Log.d("sss","ss");
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String string = response.body().string();
-//                System.out.println("服务器返回的:"+string);
-//            }
-//        });
-        initData();
-        for (int i=0;i<bboxes.size();i++){
-            draw(bboxes.get(i));
-        }
-        Message message=new Message();
-        message.obj=bitmap;
-        handler.sendMessage(message);
         mmDialog.dismiss();
         return null;
+    }
+    void parseJson(String json){
+        try {
+            JSONObject jsonObject=new JSONObject(json);
+            Data data=new Data();
+            data.setImagename((String)jsonObject.get("imagename"));
+            data.setTextname((String)jsonObject.get("textname"));
+            Log.d("ssss",data.getTextname());
+            Message message=new Message();
+            message.obj=data;
+            handler.sendMessage(message);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
     void changeBitmap2File() throws IOException {
         file = new File(Environment.getExternalStorageDirectory().getPath(), "a.jpg");

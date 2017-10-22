@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -49,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements SelectPositionLis
     ImageView setting;
     String ip="";
     String port="";
+    Intent open;
+    Intent result;
     private static  final  int REQUEST_CAMERA=1;
     private static  final int OPEN_ALBUM=2;
     private static final int REQUEST_CODE_PERMISSION = 1;
@@ -126,11 +127,9 @@ public class MainActivity extends AppCompatActivity implements SelectPositionLis
         builder.show();
     }
     private static boolean verifyPermissions(Activity activity) {
-        // Check if we have write permission
         int write_permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int read_persmission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int camera_permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.CAMERA);
-
         if (write_permission != PackageManager.PERMISSION_GRANTED ||
                 read_persmission != PackageManager.PERMISSION_GRANTED ||
                 camera_permission != PackageManager.PERMISSION_GRANTED) {
@@ -198,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements SelectPositionLis
         }
     }
     private void takePhoto(){
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        open = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
                 + "/test/" + System.currentTimeMillis() + ".jpg");
         file.getParentFile().mkdirs();
@@ -207,28 +206,28 @@ public class MainActivity extends AppCompatActivity implements SelectPositionLis
         }else {
             iamgeuri=Uri.fromFile(file);
         }
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, iamgeuri);
-        startActivityForResult(intent, REQUEST_CAMERA);
+        open.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        open.putExtra(MediaStore.EXTRA_OUTPUT, iamgeuri);
+        startActivityForResult(open, REQUEST_CAMERA);
     }
     private void openAlbum(){
-        Intent intent=new Intent("android.intent.action.GET_CONTENT");
-        intent.setType("image/*");
-        startActivityForResult(intent,2);
+        open =new Intent("android.intent.action.GET_CONTENT");
+        open.setType("image/*");
+        startActivityForResult(open,2);
     };
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CAMERA) {
             Log.e("TAG", "---------" + FileProvider.getUriForFile(this, "camera", file));
-            Intent intent=new Intent(this,ResultActivity.class);
-            intent.putExtra("uri",iamgeuri);
-            intent.putExtra("sdk",1);
-            intent.putExtra("ip",ip);
-            intent.putExtra("port",port);
+            result=new Intent(this,ResultActivity.class);
+            result.putExtra("uri",iamgeuri);
+            result.putExtra("sdk",1);
+            result.putExtra("ip",ip);
+            result.putExtra("port",port);
             try {
                 if(getContentResolver().openInputStream(iamgeuri)!=null){
-                    startActivity(intent);
+                    startActivity(result);
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -263,11 +262,11 @@ public class MainActivity extends AppCompatActivity implements SelectPositionLis
             // 如果是file类型的Uri，直接获取图片路径即可
             imagePath = uri.getPath();
         }
-        Intent intent=new Intent(this,ResultActivity.class);
-        intent.putExtra("uri",imagePath);
-        intent.putExtra("ip",ip);
-        intent.putExtra("port",port);
-        startActivity(intent);
+        result=new Intent(this,ResultActivity.class);
+        result.putExtra("uri",imagePath);
+        result.putExtra("ip",ip);
+        result.putExtra("port",port);
+        startActivity(result);
     }
     private String getImagePath(Uri uri, String selection) {
         String path = null;

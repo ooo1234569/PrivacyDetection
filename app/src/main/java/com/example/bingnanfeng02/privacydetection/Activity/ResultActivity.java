@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,6 +17,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bm.library.PhotoView;
+import com.bumptech.glide.Glide;
+import com.example.bingnanfeng02.privacydetection.Data;
+import com.example.bingnanfeng02.privacydetection.GetBitmap;
+import com.example.bingnanfeng02.privacydetection.GetBitmap1;
+import com.example.bingnanfeng02.privacydetection.GetBitmap2;
 import com.example.bingnanfeng02.privacydetection.R;
 import com.example.bingnanfeng02.privacydetection.Task.GetBitmapTask;
 
@@ -27,21 +33,21 @@ import java.io.FileNotFoundException;
 
 public class ResultActivity extends AppCompatActivity {
     PhotoView photo;
-    String path;
     Bitmap bitmap;
     long starttime;
     long stoptime;
     GetBitmapTask bitmapTask;
+    GetBitmap getBitmap;
     private static  final int size=1;
+    String url;
     Handler handler=new Handler(){
         public void handleMessage(Message msg_main) {
-            photo.setImageBitmap((Bitmap)(msg_main.obj));
+            Glide.with(ResultActivity.this).load(url+"/api_getfile/image/"+((Data)msg_main.obj).getImagename()).into(photo);
+            Log.d("sssss",url+"/api_getfile/image/"+((Data)msg_main.obj).getImagename());
             stoptime = System.currentTimeMillis();
             Toast.makeText(ResultActivity.this, "检测花费了" + String.valueOf((double) (stoptime - starttime) / 1000) + "秒", Toast.LENGTH_SHORT).show();
         }
     };
-
-    BitmapFactory.Options options = new BitmapFactory.Options();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         starttime=System.currentTimeMillis();
@@ -49,20 +55,16 @@ public class ResultActivity extends AppCompatActivity {
         setStatusBarColor();
         setContentView(R.layout.activity_result);
         photo=(PhotoView) findViewById(R.id.photo);
-        options.inSampleSize = size;
         if(getIntent().getIntExtra("sdk",0)==1){
-            try {
-                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream((Uri)getIntent().getParcelableExtra("uri")),null,options).copy(Bitmap.Config.ARGB_8888, true);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            photo.enable();
-            photo.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            getBitmap=new GetBitmap1();
         }else {
-            path=getIntent().getStringExtra("uri");
-            displayImage(path);
+            getBitmap=new GetBitmap2();
         }
-        bitmapTask=new GetBitmapTask(bitmap,handler,this,size,"http://"+getIntent().getStringExtra("ip")+":"+getIntent().getStringExtra("port")+"/detect");
+        bitmap=getBitmap.get(this);
+        photo.enable();
+        photo.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        url="http://"+getIntent().getStringExtra("ip")+":"+getIntent().getStringExtra("port");
+        bitmapTask=new GetBitmapTask(bitmap,handler,this,size,url+"/api_detect");
         bitmapTask.execute();
     }
 
@@ -79,17 +81,6 @@ public class ResultActivity extends AppCompatActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
         }
     }
-    private void displayImage(String imagePath) {//uri转换为bitmap
-        if (imagePath != null) {
-            bitmap = BitmapFactory.decodeFile(imagePath,options).copy(Bitmap.Config.ARGB_8888, true);
-            photo.enable();
-            photo.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        } else {
-            Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
