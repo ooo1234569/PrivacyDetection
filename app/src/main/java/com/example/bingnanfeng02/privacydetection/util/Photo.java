@@ -1,4 +1,4 @@
-package com.example.bingnanfeng02.privacydetection;
+package com.example.bingnanfeng02.privacydetection.util;
 
 import android.app.Activity;
 import android.content.ContentUris;

@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.example.bingnanfeng02.privacydetection.Adapter.PyqAdapter;
 import com.example.bingnanfeng02.privacydetection.CallBack.SelectPositionListener;
-import com.example.bingnanfeng02.privacydetection.Photo;
+import com.example.bingnanfeng02.privacydetection.util.Photo;
 import com.example.bingnanfeng02.privacydetection.R;
 import com.example.bingnanfeng02.privacydetection.View.SelectView;
 

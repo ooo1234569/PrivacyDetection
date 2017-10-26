@@ -44,12 +44,9 @@ public class MainActivity extends AppCompatActivity implements SelectPositionLis
     CardView relationship_detection;
     View view;
     SelectView selectView;
-    //File file;
     ImageView setting;
     String ip="";
     String port="";
-//    ;
-//    Intent result;
     private static  final  int REQUEST_CAMERA=1;
     private static  final int OPEN_ALBUM=2;
     private static final int REQUEST_CODE_PERMISSION = 1;
@@ -145,19 +142,7 @@ public class MainActivity extends AppCompatActivity implements SelectPositionLis
         }
     }
 
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        try {
-            if (requestCode == REQUEST_CODE_PERMISSION) {
-                if(grantResults.length>0&&grantResults[0]==PackageManager.PERMISSION_GRANTED){
 
-                }else{
-                    finish();
-                }
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
-        }
-    }
     void setStatusBarColor(){
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

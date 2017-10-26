@@ -8,8 +8,8 @@ import android.content.SharedPreferences;
  */
 
 public class MyApplication extends Application {
-    String ip="";
-    String port="";
+    public String ip="";
+    public String port="";
     @Override
     public void onCreate() {
         super.onCreate();
