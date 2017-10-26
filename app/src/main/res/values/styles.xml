@@ -1,10 +1,12 @@
 <resources>
 
     <!-- Base application theme. -->
+    <?xml version="1.0" encoding="utf-8"?>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">#242428</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="mypopwindow_anim_style">
@@ -21,4 +23,17 @@
         <item name="android:windowExitAnimation">@anim/push_buttom_out2</item>
         <!-- 指定消失的动画xml -->
     </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ToolBarTitleTextStyle" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#707070</item>
+        <item name="colorControlActivated">#d81e06</item>
+    </style>
 </resources>
+

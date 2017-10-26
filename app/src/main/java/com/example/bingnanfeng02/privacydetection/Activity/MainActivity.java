@@ -44,12 +44,12 @@ public class MainActivity extends AppCompatActivity implements SelectPositionLis
     CardView relationship_detection;
     View view;
     SelectView selectView;
-    File file;
+    //File file;
     ImageView setting;
     String ip="";
     String port="";
-    Intent open;
-    Intent result;
+//    ;
+//    Intent result;
     private static  final  int REQUEST_CAMERA=1;
     private static  final int OPEN_ALBUM=2;
     private static final int REQUEST_CODE_PERMISSION = 1;
@@ -197,8 +197,8 @@ public class MainActivity extends AppCompatActivity implements SelectPositionLis
         }
     }
     private void takePhoto(){
-        open = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+        Intent open = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
                 + "/test/" + System.currentTimeMillis() + ".jpg");
         file.getParentFile().mkdirs();
         if(Build.VERSION.SDK_INT>=24){
@@ -211,16 +211,16 @@ public class MainActivity extends AppCompatActivity implements SelectPositionLis
         startActivityForResult(open, REQUEST_CAMERA);
     }
     private void openAlbum(){
-        open =new Intent("android.intent.action.GET_CONTENT");
-        open.setType("image/*");
+        Intent open =new Intent("android.intent.action.GET_CONTENT");
+         open.setType("image/*");
         startActivityForResult(open,2);
     };
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CAMERA) {
-            Log.e("TAG", "---------" + FileProvider.getUriForFile(this, "camera", file));
-            result=new Intent(this,ResultActivity.class);
+            //Log.e("TAG", "---------" + FileProvider.getUriForFile(this, "camera", file));
+            Intent result=new Intent(this,ResultActivity.class);
             result.putExtra("uri",iamgeuri);
             result.putExtra("sdk",1);
             result.putExtra("ip",ip);
@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements SelectPositionLis
             // 如果是file类型的Uri，直接获取图片路径即可
             imagePath = uri.getPath();
         }
-        result=new Intent(this,ResultActivity.class);
+        Intent result=new Intent(this,ResultActivity.class);
         result.putExtra("uri",imagePath);
         result.putExtra("ip",ip);
         result.putExtra("port",port);
