@@ -65,9 +65,9 @@ public class WechatActivity extends BackActivity implements View.OnClickListener
     }
     void add_friend(){
         final View  inputServer= LayoutInflater.from(this).inflate(R.layout.view_add_friend,null);
-        final EditText portet=(EditText)inputServer.findViewById(R.id.et_add_friend);
+        //final EditText portet=(EditText)inputServer.findViewById(R.id.et_add_friend);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("输入好友的id").setView(inputServer).setNegativeButton(
+        builder.setTitle("添加好友").setView(inputServer).setNegativeButton(
                 "取消", null);
         builder.setPositiveButton("确定",
                 new DialogInterface.OnClickListener() {
