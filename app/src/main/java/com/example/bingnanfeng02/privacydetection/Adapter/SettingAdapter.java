@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.bingnanfeng02.privacydetection.Activity.ManageFriendActivity;
 import com.example.bingnanfeng02.privacydetection.MyApplication;
 import com.example.bingnanfeng02.privacydetection.R;
 
@@ -41,6 +44,7 @@ public class SettingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     case 0:
                         break;
                     case 1:
+                        context.startActivity(new Intent(context, ManageFriendActivity.class));
                         break;
                     case 2:
                         inputTitleDialog();

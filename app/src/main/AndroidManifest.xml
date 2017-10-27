@@ -29,8 +29,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.ResultActivity"></activity>
-        <activity android:name=".Activity.PyqActivity"></activity>
+        <activity android:name=".Activity.ResultActivity" />
+        <activity android:name=".Activity.PyqActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -42,7 +42,9 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-        <activity android:name=".Activity.SettingActivity"></activity>
+        <activity android:name=".Activity.SettingActivity" />
+        <activity android:name=".Activity.SendActivity" />
+        <activity android:name=".Activity.ManageFriendActivity"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff">
+<include layout="@layout/divider">
+</include>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/img_headimg"
+            android:id="@+id/img_headimg"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name"
+            android:layout_toRightOf="@+id/img_headimg"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="炳楠"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="5级"
+            android:textSize="17sp"
+            android:layout_centerVertical="true"
+            android:id="@+id/permission"/>
+    </RelativeLayout>
+    <include layout="@layout/divider"></include>
+</LinearLayout>

@@ -67,7 +67,7 @@ public class PyqActivity extends BackActivity implements View.OnClickListener, S
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         String imgpath;
-        Intent result=new Intent(this,ResultActivity.class);
+        Intent result=new Intent(this,SendActivity.class);
         if (requestCode == photo.REQUEST_CAMERA) {
             result.putExtra("uri",photo.iamgeuri);
             result.putExtra("sdk",1);
