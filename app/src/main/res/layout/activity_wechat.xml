@@ -139,5 +139,32 @@
             android:layout_height="0.01dip"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:background="#ffffff"
+        android:layout_marginTop="17dp"
+        android:layout_below="@+id/setting"
+        android:id="@+id/change_count">
+        <View
+            android:layout_gravity="top"
+            android:background="#e4e4e4"
+            android:layout_width="match_parent"
+            android:layout_height="0.01dip"
 
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="切换账号"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:textColor="#000000"/>
+        <View
+            android:layout_gravity="bottom"
+            android:background="#e4e4e4"
+            android:layout_width="match_parent"
+            android:layout_height="0.01dip"
+            />
+    </FrameLayout>
 </RelativeLayout>

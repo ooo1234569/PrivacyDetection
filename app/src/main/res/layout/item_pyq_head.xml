@@ -20,6 +20,7 @@
         android:layout_toLeftOf="@+id/headimg"
         android:layout_marginRight="13dp"
         android:layout_marginTop="7dp"
+        android:id="@+id/myname"
         />
     <ImageView
         android:id="@+id/headimg"

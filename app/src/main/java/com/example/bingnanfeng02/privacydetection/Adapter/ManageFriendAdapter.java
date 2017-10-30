@@ -6,15 +6,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.bingnanfeng02.privacydetection.MyApplication;
 import com.example.bingnanfeng02.privacydetection.R;
+
+import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -26,12 +31,21 @@ public class ManageFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final String[] dengji={"0","1","2","3","4","5"};
     String[] friends;
     Context context;
-    int[] permission;
+    int[][] permission;
     int temp;
-    public ManageFriendAdapter(String[] friends,int[] permission, Context context){
+    ArrayList<String> strings=new ArrayList<>();
+    ArrayList<Integer> integers=new ArrayList<>();
+    public ManageFriendAdapter(String[] friends,int[][] permission, Context context){
         this.friends=friends;
         this.permission=permission;
         this.context=context;
+        for(int i=0;i<friends.length;i++){
+            if(friends[i]==((MyApplication)((Activity)context).getApplication()).friend[((MyApplication)((Activity)context).getApplication()).i]){
+                continue;
+            }
+            strings.add(friends[i]);
+            integers.add(i);
+        }
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -49,7 +63,7 @@ public class ManageFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     void inputpremission(final int i){
         temp=i;
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setSingleChoiceItems(dengji,permission[i],new DialogInterface.OnClickListener() {
+        builder.setSingleChoiceItems(dengji,permission[((MyApplication)((Activity) context).getApplication()).i][integers.get(i)],new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 temp=which;
             }
@@ -60,7 +74,7 @@ public class ManageFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         if(i!=temp){
-                            permission[i]=temp;
+                            permission[((MyApplication)((Activity) context).getApplication()).i][integers.get(i)]=temp;
                             notifyDataSetChanged();
                         }
                     }
@@ -70,21 +84,24 @@ public class ManageFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((Friend)holder).name.setText(friends[position]);
-        ((Friend)holder).permission.setText(permission[position]+"级");
+         Glide.with(context).load(((MyApplication)((Activity)context).getApplication()).headimg[integers.get(position)]).into(((Friend)holder).headimg);
+        ((Friend)holder).name.setText(strings.get(position));
+        ((Friend)holder).permission.setText(permission[((MyApplication)((Activity) context).getApplication()).i][integers.get(position)]+"级");
     }
 
     @Override
     public int getItemCount() {
-        return friends.length;
+        return permission.length-1;
     }
     class Friend extends RecyclerView.ViewHolder {
         TextView name;
         TextView permission;
+        ImageView headimg;
         public Friend(View itemView) {
             super(itemView);
             name=(TextView)itemView.findViewById(R.id.name);
             permission=(TextView)itemView.findViewById(R.id.permission);
+            headimg=(ImageView)itemView.findViewById(R.id.img_headimg);
         }
     }
 }

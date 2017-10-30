@@ -11,7 +11,9 @@
         android:id="@+id/rv"></android.support.v7.widget.RecyclerView>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
         <include layout="@layout/item_open_auto_fill"></include>
     </LinearLayout>
+
 </LinearLayout>

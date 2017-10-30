@@ -22,7 +22,8 @@ import com.example.bingnanfeng02.privacydetection.R;
  */
 
 public class WechatActivity extends BackActivity implements View.OnClickListener {
-
+    private static  final  String[] friend={"Alice","Bob","Cindy"};
+    private int temp=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +33,7 @@ public class WechatActivity extends BackActivity implements View.OnClickListener
         findViewById(R.id.pyq).setOnClickListener(this);
         findViewById(R.id.setting).setOnClickListener(this);
         findViewById(R.id.add_friend).setOnClickListener(this);
+        findViewById(R.id.change_count).setOnClickListener(this);
     }
 
     @Override
@@ -46,7 +48,26 @@ public class WechatActivity extends BackActivity implements View.OnClickListener
             case  R.id.add_friend:
                 add_friend();
                 break;
+            case R.id.change_count:
+                change_count();
+                break;
         }
+    }
+    void change_count(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("切换账号").setSingleChoiceItems(friend,((MyApplication)getApplication()).i,new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                       temp=which;
+            }
+        }).setNegativeButton(
+                "取消", null);
+        builder.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        ((MyApplication)getApplication()).i=temp;
+                    }
+                });
+        builder.show();
     }
         public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         try {
@@ -65,7 +86,6 @@ public class WechatActivity extends BackActivity implements View.OnClickListener
     }
     void add_friend(){
         final View  inputServer= LayoutInflater.from(this).inflate(R.layout.view_add_friend,null);
-        //final EditText portet=(EditText)inputServer.findViewById(R.id.et_add_friend);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("添加好友").setView(inputServer).setNegativeButton(
                 "取消", null);

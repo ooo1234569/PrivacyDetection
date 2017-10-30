@@ -1,6 +1,7 @@
 package com.example.bingnanfeng02.privacydetection.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,11 +11,14 @@ import android.view.View;
 
 import com.example.bingnanfeng02.privacydetection.Adapter.PyqAdapter;
 import com.example.bingnanfeng02.privacydetection.CallBack.SelectPositionListener;
+import com.example.bingnanfeng02.privacydetection.MyApplication;
+import com.example.bingnanfeng02.privacydetection.data.Pyq;
 import com.example.bingnanfeng02.privacydetection.util.Photo;
 import com.example.bingnanfeng02.privacydetection.R;
 import com.example.bingnanfeng02.privacydetection.View.SelectView;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 /**
  * Created by bingnanfeng02 on 2017/10/24.
@@ -26,19 +30,55 @@ public class PyqActivity extends BackActivity implements View.OnClickListener, S
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private Photo photo;
+    private ArrayList<Pyq> pyqs=new ArrayList<>();
+    private MyApplication myApplication;
+    private PyqAdapter pyqAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pyq);
+        myApplication=(MyApplication)getApplication();
         photo=new Photo(this);
         initback("朋友圈");
+        initsenddata();
+        inittestdata();
         recyclerView=(RecyclerView)findViewById(R.id.rv);
         linearLayoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new PyqAdapter(this));
+        pyqAdapter=new PyqAdapter(this,pyqs);
+        recyclerView.setAdapter(pyqAdapter);
         findViewById(R.id.camera).setOnClickListener(this);
     }
+    void initsenddata(){
+        SharedPreferences pref=getSharedPreferences("pyq",MODE_PRIVATE);
+        Pyq pyq=new Pyq();
+        pyq.setName(pref.getString("name",""));
+        if(pyq.getName().equals("")){
 
+        }else {
+            pyq.setText(pref.getString("text",""));
+            pyq.setPermission(Integer.valueOf(pref.getString("permission","0")));
+            pyq.setId(Integer.valueOf(pref.getString("id","0")));
+            if(!pyq.getName().equals(myApplication.friend[((MyApplication)getApplication()).i])){
+                if(myApplication.perimission[pyq.getId()][myApplication.i]>pyq.getPermission()){
+                    pyqs.add(pyq);
+                }
+            }else {
+                pyqs.add(pyq);
+            }
+        }
+    }
+    void inittestdata(){
+        for(int i=0;i<5;i++){
+            Pyq pyq=new Pyq();
+            pyq.setName("Alice");
+            pyq.setText("test");
+            pyq.setPermission(0);
+            pyq.setId(0);
+            pyq.setIstest(true);
+            pyqs.add(pyq);
+        }
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -87,5 +127,18 @@ public class PyqActivity extends BackActivity implements View.OnClickListener, S
                 }
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refresh();
+    }
+
+    void refresh(){
+        pyqs.clear();
+        initsenddata();
+        inittestdata();
+        pyqAdapter.notifyDataSetChanged();
     }
 }

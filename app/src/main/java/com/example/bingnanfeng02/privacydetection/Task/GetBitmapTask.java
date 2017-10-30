@@ -40,6 +40,7 @@ import okhttp3.Response;
 public class GetBitmapTask  extends AsyncTask {
     private ProgressDialog mmDialog;
     private Bitmap bitmap;
+    private static Bitmap bitmap2;
     private Handler handler;
     private Context context;
     private Canvas canvas;
@@ -47,7 +48,7 @@ public class GetBitmapTask  extends AsyncTask {
     private ArrayList<Bbox> bboxes=new ArrayList<>();
     private int size;
     private String url;
-    private File file;
+    private static File file;
     public GetBitmapTask(Bitmap bitmap, Handler handler, Context context,int size,String url){
         this.bitmap=bitmap;
         this.handler=handler;
@@ -68,14 +69,14 @@ public class GetBitmapTask  extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-            changeBitmap2File();
+            changeBitmap2File(bitmap);
         } catch (IOException e) {
             e.printStackTrace();
         }
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), file);
         MultipartBody multipartBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("image", "a.jpg", requestBody)
+                .addFormDataPart("image", "perimission.jpg", requestBody)
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(1000, TimeUnit.SECONDS)
@@ -111,11 +112,16 @@ public class GetBitmapTask  extends AsyncTask {
             e.printStackTrace();
         }
     }
-    void changeBitmap2File() throws IOException {
-        file = new File(Environment.getExternalStorageDirectory().getPath(), "a.jpg");
+    public static void  changeBitmap2File(Bitmap bitmap) throws IOException {
+        bitmap2=bitmap;
+        file = new File(Environment.getExternalStorageDirectory().getPath(), "perimission.jpg");
         file.createNewFile();
         FileOutputStream fos = new FileOutputStream(file);
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);//压缩成图片  保存在fos
+    }
+
+    public static Bitmap returnBitmap(){
+        return bitmap2;
     }
 
     void initData(){
