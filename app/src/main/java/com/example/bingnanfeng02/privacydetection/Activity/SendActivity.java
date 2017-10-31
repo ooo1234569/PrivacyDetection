@@ -23,13 +23,15 @@ import com.example.bingnanfeng02.privacydetection.GetBitmap2;
 import com.example.bingnanfeng02.privacydetection.MyApplication;
 import com.example.bingnanfeng02.privacydetection.R;
 import com.example.bingnanfeng02.privacydetection.Task.GetBitmapTask;
+import com.example.bingnanfeng02.privacydetection.View.GetBm;
+import com.example.bingnanfeng02.privacydetection.util.GetpxOrdp;
 
 import java.io.IOException;
 import java.util.Random;
 
 public class SendActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String[] dengji={"公开","1级以上","2级以上","3级以上","4级以上","5级","仅自己"};
-    GetBitmap getBitmap;
+    GetBm getBitmap;
     Bitmap bitmap;
     ImageView img;
     ImageView img_juece;
@@ -62,7 +64,8 @@ public class SendActivity extends AppCompatActivity implements View.OnClickListe
         }else {
             getBitmap=new GetBitmap2();
         }
-        bitmap=getBitmap.get(this);
+        bitmap=getBitmap.get(this, GetpxOrdp.dip2px(this,75),GetpxOrdp.dip2px(this,75));
+        Log.d("ss",bitmap.getByteCount()+"");
         img.setImageBitmap(bitmap);
         if(myApplication.auto_fill){
             tx_permission.setText("已开启自动分组");

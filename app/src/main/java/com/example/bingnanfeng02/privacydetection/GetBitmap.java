@@ -8,5 +8,5 @@ import android.graphics.Bitmap;
  */
 
 public interface GetBitmap {
-    abstract Bitmap get(Context context);
+    abstract Bitmap get(Context context,int size);
 }

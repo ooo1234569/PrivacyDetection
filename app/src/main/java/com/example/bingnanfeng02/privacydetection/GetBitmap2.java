@@ -8,21 +8,23 @@ import android.net.Uri;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.bingnanfeng02.privacydetection.View.GetBm;
+
 import java.io.FileNotFoundException;
 
 /**
  * Created by bingnanfeng02 on 2017/10/20.
  */
 
-public class GetBitmap2 implements GetBitmap {
-    BitmapFactory.Options options;
-    public GetBitmap2(){
-        options = new BitmapFactory.Options();
-    }
-    public Bitmap get(Context context){
+public class GetBitmap2 extends GetBm {
+    public Bitmap get(Context context,int width,int height){
         String path=((Activity)context).getIntent().getStringExtra("uri");
         if (path != null) {
-           return BitmapFactory.decodeFile(path,options).copy(Bitmap.Config.ARGB_8888, true);
+            BitmapFactory.decodeFile(path,options);
+            options.inPreferredConfig = Bitmap.Config.ARGB_4444;
+            options.inSampleSize = calculateInSampleSize(width, height);
+            options.inJustDecodeBounds = false;
+           return BitmapFactory.decodeFile(path,options).copy(Bitmap.Config.ARGB_4444, true);
         } else {
             return null;
         }

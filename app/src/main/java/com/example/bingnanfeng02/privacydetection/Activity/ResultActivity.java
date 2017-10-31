@@ -50,22 +50,22 @@ public class ResultActivity extends AppCompatActivity {
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        starttime=System.currentTimeMillis();
-        super.onCreate(savedInstanceState);
-        setStatusBarColor();
-        setContentView(R.layout.activity_result);
-        photo=(PhotoView) findViewById(R.id.photo);
-        if(getIntent().getIntExtra("sdk",0)==1){
-            getBitmap=new GetBitmap1();
-        }else {
-            getBitmap=new GetBitmap2();
-        }
-        bitmap=getBitmap.get(this);
-        photo.enable();
-        photo.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        url="http://"+getIntent().getStringExtra("ip")+":"+getIntent().getStringExtra("port");
-        bitmapTask=new GetBitmapTask(bitmap,handler,this,size,url+"/api_detect");
-        bitmapTask.execute();
+//        starttime=System.currentTimeMillis();
+//        super.onCreate(savedInstanceState);
+//        setStatusBarColor();
+//        setContentView(R.layout.activity_result);
+//        photo=(PhotoView) findViewById(R.id.photo);
+//        if(getIntent().getIntExtra("sdk",0)==1){
+//            getBitmap=new GetBitmap1();
+//        }else {
+//            getBitmap=new GetBitmap2();
+//        }
+//        bitmap=getBitmap.get(this,5);
+//        photo.enable();
+//        photo.setScaleType(ImageView.ScaleType.FIT_CENTER);
+//        url="http://"+getIntent().getStringExtra("ip")+":"+getIntent().getStringExtra("port");
+//        bitmapTask=new GetBitmapTask(bitmap,handler,this,size,url+"/api_detect");
+//        bitmapTask.execute();
     }
 
     void setStatusBarColor(){

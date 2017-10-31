@@ -6,20 +6,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 
+import com.example.bingnanfeng02.privacydetection.View.GetBm;
+
 import java.io.FileNotFoundException;
 
 /**
  * Created by bingnanfeng02 on 2017/10/20.
  */
 
-public class GetBitmap1 implements GetBitmap {
-    BitmapFactory.Options options;
-    public GetBitmap1(){
-        options = new BitmapFactory.Options();
-    }
-    public Bitmap get(Context context){
+public class GetBitmap1 extends GetBm {
+    public Bitmap get(Context context,int width,int height){
         try {
-            return BitmapFactory.decodeStream((context).getContentResolver().openInputStream((Uri) ((Activity)context).getIntent().getParcelableExtra("uri")),null,options).copy(Bitmap.Config.ARGB_8888, true);
+            BitmapFactory.decodeStream((context).getContentResolver().openInputStream((Uri) ((Activity)context).getIntent().getParcelableExtra("uri")),null,options);
+            options.inPreferredConfig = Bitmap.Config.ARGB_4444;
+            options.inSampleSize = calculateInSampleSize(width, height);
+            options.inJustDecodeBounds = false;
+            return BitmapFactory.decodeStream((context).getContentResolver().openInputStream((Uri) ((Activity)context).getIntent().getParcelableExtra("uri")),null,options).copy(Bitmap.Config.ARGB_4444, true);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return null;
