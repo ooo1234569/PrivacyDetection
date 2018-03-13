@@ -13,6 +13,8 @@ public class Constant {
     public static String denglu =ip+":"+port+"/auth/login";
     public static String dengchu =ip+":"+port+"/auth/logout";
     public static String addfriend =ip+":"+port+"/auth/logout";
+    public static String managefriend;
+    public static String updatepremi;
     public static String wangzhi= sendweibo +":"+port;
     public static String sendpyq=wangzhi;
     public static int size=1;

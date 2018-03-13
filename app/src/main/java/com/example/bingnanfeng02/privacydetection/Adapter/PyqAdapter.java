@@ -63,8 +63,8 @@ public class PyqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
           if(holder instanceof Aboutme){
-              Glide.with(context).load(((MyApplication)((Activity)context).getApplication()).touxiang).into(((Aboutme)holder).bg);
-              Glide.with(context).load(((MyApplication)((Activity)context).getApplication()).touxiang).into(((Aboutme)holder).headimg);
+              Glide.with(context).load(Constant.wangzhi+((MyApplication)((Activity)context).getApplication()).touxiang).into(((Aboutme)holder).bg);
+              Glide.with(context).load(Constant.wangzhi+((MyApplication)((Activity)context).getApplication()).touxiang).into(((Aboutme)holder).headimg);
               ((Aboutme)holder).myname.setText(((MyApplication)((Activity)context).getApplication()).email);
           }else {
               Glide.with(context).load(Constant.wangzhi+pyqs.get(position+flag-1).getTuxianglujing()).into(((Pyq2)holder).img);

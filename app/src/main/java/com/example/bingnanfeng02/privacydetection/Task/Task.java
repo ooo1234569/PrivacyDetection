@@ -79,7 +79,11 @@ public  class Task extends AsyncTask {
     private void parseJson(String json,Handler handler,Object object){
         message=new Message();
         Gson gson=new Gson();
-        object=gson.fromJson(json,object.getClass());
+        try {
+            object=gson.fromJson(json,object.getClass());
+        }catch (Exception e){
+            object=null;
+        }
         message.obj=object;
         handler.sendMessage(message);
     }
