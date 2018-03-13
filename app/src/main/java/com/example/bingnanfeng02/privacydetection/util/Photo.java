@@ -13,7 +13,6 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 
-import com.example.bingnanfeng02.privacydetection.Activity.ResultActivity;
 
 import java.io.File;
 

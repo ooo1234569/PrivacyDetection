@@ -15,11 +15,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.example.bingnanfeng02.privacydetection.Data;
+import com.example.bingnanfeng02.privacydetection.Constant;
 import com.example.bingnanfeng02.privacydetection.data.Bbox;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.bingnanfeng02.privacydetection.data.SendPyqReturn;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.io.File;
@@ -27,8 +26,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -37,7 +34,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class GetBitmapTask  extends AsyncTask {
+public class SendPyq extends AsyncTask {
     private ProgressDialog mmDialog;
     private Bitmap bitmap;
     private static Bitmap bitmap2;
@@ -46,26 +43,24 @@ public class GetBitmapTask  extends AsyncTask {
     private Canvas canvas;
     private Paint paint;
     private ArrayList<Bbox> bboxes=new ArrayList<>();
-    private int size;
-    private String url;
     private static File file;
-    public GetBitmapTask(Bitmap bitmap, Handler handler, Context context,int size,String url){
+    private String txt;
+    public SendPyq(Bitmap bitmap,String txt, Handler handler, Context context){
         this.bitmap=bitmap;
         this.handler=handler;
         this.context=context;
-        this.size=size;
-        this.url=url;
+        this.txt=txt;
         paint=new Paint();
         paint.setColor(Color.RED);
-        paint.setStrokeWidth(12.5f/size);
-        paint.setTextSize(100/size);
+        paint.setStrokeWidth(12.5f/Constant.size);
+        paint.setTextSize(100/Constant.size);
         canvas=new Canvas(bitmap);
     }
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        mmDialog = ProgressDialog.show(context, "请等待","正在识别中", true);
-    }
+//    @Override
+//    protected void onPreExecute() {
+//        super.onPreExecute();
+//        mmDialog = ProgressDialog.show(context, "请等待","正在识别中", true);
+//    }
     @Override
     protected Object doInBackground(Object[] params) {
         try {
@@ -76,41 +71,37 @@ public class GetBitmapTask  extends AsyncTask {
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), file);
         MultipartBody multipartBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("image", "perimission.jpg", requestBody)
+                .addFormDataPart("text", txt)
+                .addFormDataPart("images", "perimission.jpg", requestBody)
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(1000, TimeUnit.SECONDS)
                 .connectTimeout(1000, TimeUnit.SECONDS)
                 .writeTimeout(1000, TimeUnit.SECONDS)
                 .build();
+        Log.d("sendweibo",Constant.sendweibo);
         Request request = new Request.Builder()
-                .url(url)
+                .url(Constant.sendweibo)
                 .post(multipartBody)
                 .build();
         try {
             Response response=okHttpClient.newCall(request).execute();
             String s=response.body().string();
             parseJson(s);
-            Log.d("json",s);
+            Log.d("sendweibojson",s);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mmDialog.dismiss();
+        //mmDialog.dismiss();
         return null;
     }
     void parseJson(String json){
-        try {
-            JSONObject jsonObject=new JSONObject(json);
-            Data data=new Data();
-            data.setImagename((String)jsonObject.get("imagename"));
-            data.setTextname((String)jsonObject.get("textname"));
-            Log.d("ssss",data.getTextname());
-            Message message=new Message();
-            message.obj=data;
-            handler.sendMessage(message);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        Log.d("json",json);
+        Gson gson = new Gson();
+        SendPyqReturn sendPyqReturn=gson.fromJson(json,SendPyqReturn.class);
+        Message message=new Message();
+        message.obj=sendPyqReturn;
+        handler.sendMessage(message);
     }
     public static void  changeBitmap2File(Bitmap bitmap) throws IOException {
         bitmap2=bitmap;
@@ -126,10 +117,10 @@ public class GetBitmapTask  extends AsyncTask {
 
     void initData(){
         Bbox bbox=new Bbox();
-        bbox.x=50/size;
-        bbox.y=50/size;
-        bbox.width=500/size;
-        bbox.height=500/size;
+        bbox.x=50/Constant.size;
+        bbox.y=50/Constant.size;
+        bbox.width=500/Constant.size;
+        bbox.height=500/Constant.size;
         bbox.classes="object";
         bboxes.add(bbox);
     }
@@ -155,6 +146,6 @@ public class GetBitmapTask  extends AsyncTask {
         pts[14]=bbox.x+bbox.width;
         pts[15]=bbox.y+bbox.height;
         canvas.drawLines(pts,paint);
-        canvas.drawText(bbox.classes,bbox.x,bbox.y-(paint.getStrokeWidth()/size)-5/size,paint);
+        canvas.drawText(bbox.classes,bbox.x,bbox.y-(paint.getStrokeWidth()/Constant.size)-5/Constant.size,paint);
     }
 }

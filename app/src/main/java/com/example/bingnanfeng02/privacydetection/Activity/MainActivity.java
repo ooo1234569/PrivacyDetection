@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements SelectPositionLis
         setting=(ImageView)findViewById(R.id.setting);
         view=findViewById(R.id.rl);
         SharedPreferences pref=getSharedPreferences("data",MODE_PRIVATE);
-        ip=pref.getString("ip","");
+        ip=pref.getString("sendweibo","");
         port=pref.getString("port","");
         initOnClick();
     }
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements SelectPositionLis
                         SharedPreferences.Editor editor=getSharedPreferences("data",MODE_PRIVATE).edit();
                         ip=ipet.getText().toString();
                         port=portet.getText().toString();
-                        editor.putString("ip",ip);
+                        editor.putString("sendweibo",ip);
                         editor.putString("port",port);
                         editor.apply();
 
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements SelectPositionLis
             Intent result=new Intent(this,ResultActivity.class);
             result.putExtra("uri",iamgeuri);
             result.putExtra("sdk",1);
-            result.putExtra("ip",ip);
+            result.putExtra("sendweibo",ip);
             result.putExtra("port",port);
             try {
                 if(getContentResolver().openInputStream(iamgeuri)!=null){
@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements SelectPositionLis
         }
         Intent result=new Intent(this,ResultActivity.class);
         result.putExtra("uri",imagePath);
-        result.putExtra("ip",ip);
+        result.putExtra("sendweibo",ip);
         result.putExtra("port",port);
         startActivity(result);
     }

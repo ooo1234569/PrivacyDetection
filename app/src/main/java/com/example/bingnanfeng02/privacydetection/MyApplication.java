@@ -23,7 +23,7 @@ public class MyApplication extends Application {
         super.onCreate();
         LeakCanary.install(this);
         SharedPreferences pref=getSharedPreferences("data",MODE_PRIVATE);
-        ip=pref.getString("ip","");
+        ip=pref.getString("sendweibo","");
         port=pref.getString("port","");
         auto_fill=isAuto_fill();
     }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,7 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.bingnanfeng02.privacydetection.MyApplication;
 import com.example.bingnanfeng02.privacydetection.R;
-import com.example.bingnanfeng02.privacydetection.Task.GetBitmapTask;
+import com.example.bingnanfeng02.privacydetection.Task.SendPyq;
 import com.example.bingnanfeng02.privacydetection.data.Pyq;
 
 import java.io.ByteArrayOutputStream;
@@ -29,35 +30,48 @@ import java.util.ArrayList;
 public class PyqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     ArrayList<Pyq> pyqs;
-    public PyqAdapter(Context context, ArrayList<Pyq> pyqs){
+    int flag;
+    public PyqAdapter(Context context, ArrayList<Pyq> pyqs,int flag){
         this.context=context;
         this.pyqs=pyqs;
+        this.flag=flag;
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType==0){
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pyq_head,parent,false);
-            Aboutme aboutme=new Aboutme(view);
-            return aboutme;
+        if(flag == 0){
+            if(viewType==0){
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pyq_head,parent,false);
+                Aboutme aboutme=new Aboutme(view);
+                return aboutme;
+            }else {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pyq,parent,false);
+                Pyq2 pyq2=new Pyq2(view);
+                return pyq2;
+            }
         }else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pyq,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pass_pyq,parent,false);
+            ViewGroup.LayoutParams params = view.getLayoutParams();
+            params.width=(int)(getScreenWidth()*0.8);
+            view.setLayoutParams(params);
             Pyq2 pyq2=new Pyq2(view);
             return pyq2;
         }
+
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        Log.d("sss",position+"");
           if(holder instanceof Aboutme){
               Glide.with(context).load(((MyApplication)((Activity)context).getApplication()).headimg[((MyApplication)((Activity)context).getApplication()).i]).into(((Aboutme)holder).bg);
               Glide.with(context).load(((MyApplication)((Activity)context).getApplication()).headimg[((MyApplication)((Activity)context).getApplication()).i]).into(((Aboutme)holder).headimg);
               ((Aboutme)holder).myname.setText(((MyApplication)((Activity)context).getApplication()).friend[((MyApplication)((Activity)context).getApplication()).i]);
           }else {
-              if(pyqs.get(position-1).istest()){
+              if(pyqs.get(position+flag-1).istest()){
                   Glide.with(context).load(R.drawable.img_headimg).into(((Pyq2)holder).img);
               }else {
                   ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                  Bitmap bitmap=GetBitmapTask.returnBitmap();
+                  Bitmap bitmap= SendPyq.returnBitmap();
                   if(bitmap==null){
                       bitmap=BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getPath()+"/a.jpg");
                   }
@@ -67,11 +81,11 @@ public class PyqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                           .load(bytes)
                           .into(((Pyq2)holder).img);
               }
-              Glide.with(context).load(((MyApplication)((Activity)context).getApplication()).headimg[pyqs.get(position-1).getId()]).into(((Pyq2)holder).headimg);
-              ((Pyq2)holder).name.setText(pyqs.get(position-1).getName());
-              ((Pyq2)holder).text.setText(pyqs.get(position-1).getText());
-              if(((MyApplication)((Activity)context).getApplication()).i==pyqs.get(position-1).getId()){
-                  ((Pyq2)holder).permission.setText(pyqs.get(position-1).getPermission()+"级权限");
+              Glide.with(context).load(((MyApplication)((Activity)context).getApplication()).headimg[pyqs.get(position+flag-1).getId()]).into(((Pyq2)holder).headimg);
+              ((Pyq2)holder).name.setText(pyqs.get(position+flag-1).getName());
+              ((Pyq2)holder).text.setText(pyqs.get(position+flag-1).getText());
+              if(((MyApplication)((Activity)context).getApplication()).i==pyqs.get(position+flag-1).getId()){
+                  ((Pyq2)holder).permission.setText(pyqs.get(position+flag-1).getPermission()+"级权限");
                   ((Pyq2)holder).permission.setVisibility(View.VISIBLE);
               }
           }
@@ -79,16 +93,21 @@ public class PyqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return pyqs.size()+1;
+        return pyqs.size()+1-flag;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(position==0){
-            return 0;
+        if(flag ==0){
+            if(position==0){
+                return 0;
+            }else {
+                return 1;
+            }
         }else {
             return 1;
         }
+
     }
     class Pyq2 extends RecyclerView.ViewHolder {
         ImageView headimg;
@@ -115,5 +134,10 @@ public class PyqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             bg=(ImageView)itemView.findViewById(R.id.bg);
             myname=(TextView)itemView.findViewById(R.id.myname);
         }
+    }
+    public int getScreenWidth() {
+        Point point = new Point();
+        ((Activity)context).getWindowManager().getDefaultDisplay().getSize(point);
+        return point.x;
     }
 }

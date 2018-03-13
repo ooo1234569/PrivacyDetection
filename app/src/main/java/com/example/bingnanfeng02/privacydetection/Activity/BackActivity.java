@@ -1,5 +1,6 @@
 package com.example.bingnanfeng02.privacydetection.Activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -28,5 +29,15 @@ public class BackActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.activity_out);
+    }
 
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.activity_in,0);
+    }
 }

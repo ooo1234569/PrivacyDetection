@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.example.bingnanfeng02.privacydetection.Adapter.PyqAdapter;
 import com.example.bingnanfeng02.privacydetection.CallBack.SelectPositionListener;
@@ -31,13 +32,13 @@ public class PyqActivity extends BackActivity implements View.OnClickListener, S
     private LinearLayoutManager linearLayoutManager;
     private Photo photo;
     private ArrayList<Pyq> pyqs=new ArrayList<>();
-    private MyApplication myApplication;
+    //private MyApplication myApplication;
     private PyqAdapter pyqAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pyq);
-        myApplication=(MyApplication)getApplication();
+        //myApplication=(MyApplication)getApplication();
         photo=new Photo(this);
         initback("朋友圈");
         initsenddata();
@@ -45,39 +46,39 @@ public class PyqActivity extends BackActivity implements View.OnClickListener, S
         recyclerView=(RecyclerView)findViewById(R.id.rv);
         linearLayoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        pyqAdapter=new PyqAdapter(this,pyqs);
-        recyclerView.setAdapter(pyqAdapter);
+//        pyqAdapter=new PyqAdapter(this,pyqs,0);
+//        recyclerView.setAdapter(pyqAdapter);
         findViewById(R.id.camera).setOnClickListener(this);
     }
     void initsenddata(){
-        SharedPreferences pref=getSharedPreferences("pyq",MODE_PRIVATE);
-        Pyq pyq=new Pyq();
-        pyq.setName(pref.getString("name",""));
-        if(pyq.getName().equals("")){
-
-        }else {
-            pyq.setText(pref.getString("text",""));
-            pyq.setPermission(Integer.valueOf(pref.getString("permission","0")));
-            pyq.setId(Integer.valueOf(pref.getString("id","0")));
-            if(!pyq.getName().equals(myApplication.friend[((MyApplication)getApplication()).i])){
-                if(myApplication.perimission[pyq.getId()][myApplication.i]>pyq.getPermission()){
-                    pyqs.add(pyq);
-                }
-            }else {
-                pyqs.add(pyq);
-            }
-        }
+//        SharedPreferences pref=getSharedPreferences("pyq",MODE_PRIVATE);
+//        Pyq pyq=new Pyq();
+//        pyq.setName(pref.getString("name",""));
+//        if(pyq.getName().equals("")){
+//
+//        }else {
+//            pyq.setText(pref.getString("text",""));
+//            pyq.setPermission(Integer.valueOf(pref.getString("permission","0")));
+//            pyq.setId(Integer.valueOf(pref.getString("id","0")));
+//            if(!pyq.getName().equals(myApplication.friend[((MyApplication)getApplication()).i])){
+//                if(myApplication.perimission[pyq.getId()][myApplication.i]>pyq.getPermission()){
+//                    pyqs.add(pyq);
+//                }
+//            }else {
+//                pyqs.add(pyq);
+//            }
+//        }
     }
     void inittestdata(){
-        for(int i=0;i<5;i++){
-            Pyq pyq=new Pyq();
-            pyq.setName("Alice");
-            pyq.setText("test");
-            pyq.setPermission(0);
-            pyq.setId(0);
-            pyq.setIstest(true);
-            pyqs.add(pyq);
-        }
+//        for(int i=0;i<5;i++){
+//            Pyq pyq=new Pyq();
+//            pyq.setName("Alice");
+//            pyq.setText("test");
+//            pyq.setPermission(0);
+//            pyq.setId(0);
+//            pyq.setIstest(true);
+//            pyqs.add(pyq);
+//        }
     }
     @Override
     public void onClick(View v) {
@@ -107,7 +108,7 @@ public class PyqActivity extends BackActivity implements View.OnClickListener, S
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         String imgpath;
-        Intent result=new Intent(this,SendActivity.class);
+        Intent result=new Intent(this,NewSendActivity.class);
         if (requestCode == photo.REQUEST_CAMERA) {
             result.putExtra("uri",photo.iamgeuri);
             result.putExtra("sdk",1);
@@ -129,6 +130,8 @@ public class PyqActivity extends BackActivity implements View.OnClickListener, S
         }
     }
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -136,9 +139,9 @@ public class PyqActivity extends BackActivity implements View.OnClickListener, S
     }
 
     void refresh(){
-        pyqs.clear();
-        initsenddata();
-        inittestdata();
-        pyqAdapter.notifyDataSetChanged();
+//        pyqs.clear();
+//        initsenddata();
+//        inittestdata();
+//        pyqAdapter.notifyDataSetChanged();
     }
 }

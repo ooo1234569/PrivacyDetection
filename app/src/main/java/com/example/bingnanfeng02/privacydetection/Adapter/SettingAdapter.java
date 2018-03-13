@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bingnanfeng02.privacydetection.Activity.ManageFriendActivity;
+import com.example.bingnanfeng02.privacydetection.Activity.SetRuleActivity;
 import com.example.bingnanfeng02.privacydetection.MyApplication;
 import com.example.bingnanfeng02.privacydetection.R;
 
@@ -42,6 +43,7 @@ public class SettingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 int i=setting.getAdapterPosition();
                 switch (i){
                     case 0:
+                        context.startActivity(new Intent(context, SetRuleActivity.class));
                         break;
                     case 1:
                         context.startActivity(new Intent(context, ManageFriendActivity.class));
@@ -70,7 +72,7 @@ public class SettingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         SharedPreferences.Editor editor=context.getSharedPreferences("data",MODE_PRIVATE).edit();
                         ((MyApplication)((Activity) context).getApplication()).ip=ipet.getText().toString();
                         ((MyApplication)((Activity) context).getApplication()).port=portet.getText().toString();
-                        editor.putString("ip",((MyApplication)((Activity) context).getApplication()).ip);
+                        editor.putString("sendweibo",((MyApplication)((Activity) context).getApplication()).ip);
                         editor.putString("port",((MyApplication)((Activity) context).getApplication()).port);
                         editor.apply();
 

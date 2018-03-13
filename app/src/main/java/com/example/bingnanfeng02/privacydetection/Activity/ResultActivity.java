@@ -1,9 +1,7 @@
 package com.example.bingnanfeng02.privacydetection.Activity;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,19 +11,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.example.bingnanfeng02.privacydetection.Data;
 import com.example.bingnanfeng02.privacydetection.GetBitmap;
-import com.example.bingnanfeng02.privacydetection.GetBitmap1;
-import com.example.bingnanfeng02.privacydetection.GetBitmap2;
-import com.example.bingnanfeng02.privacydetection.R;
-import com.example.bingnanfeng02.privacydetection.Task.GetBitmapTask;
-
-import java.io.FileNotFoundException;
+import com.example.bingnanfeng02.privacydetection.Task.SendPyq;
 
 /**
  * Created by bingnanfeng02 on 2017/10/4.
@@ -36,7 +28,7 @@ public class ResultActivity extends AppCompatActivity {
     Bitmap bitmap;
     long starttime;
     long stoptime;
-    GetBitmapTask bitmapTask;
+    SendPyq bitmapTask;
     GetBitmap getBitmap;
     private static  final int size=1;
     String url;
@@ -51,7 +43,7 @@ public class ResultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //        starttime=System.currentTimeMillis();
-//        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
 //        setStatusBarColor();
 //        setContentView(R.layout.activity_result);
 //        photo=(PhotoView) findViewById(R.id.photo);
@@ -63,7 +55,7 @@ public class ResultActivity extends AppCompatActivity {
 //        bitmap=getBitmap.get(this,5);
 //        photo.enable();
 //        photo.setScaleType(ImageView.ScaleType.FIT_CENTER);
-//        url="http://"+getIntent().getStringExtra("ip")+":"+getIntent().getStringExtra("port");
+//        url="http://"+getIntent().getStringExtra("sendweibo")+":"+getIntent().getStringExtra("port");
 //        bitmapTask=new GetBitmapTask(bitmap,handler,this,size,url+"/api_detect");
 //        bitmapTask.execute();
     }

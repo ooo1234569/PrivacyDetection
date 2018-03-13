@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#efeff4">
@@ -10,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:elevation="0dp"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:layout_alignParentTop="true">
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -44,6 +44,8 @@
         android:background="#ffffff"
         android:focusable="true"
         android:focusableInTouchMode="true"
+        android:layout_below="@+id/appbar_layout"
+        android:id="@+id/ll"
         >
     <!--<EditText-->
         <!--android:layout_width="match_parent"-->
@@ -92,9 +94,10 @@
         android:layout_width="match_parent"
         android:layout_height="43dp"
         android:layout_marginTop="17dp"
-        android:layout_below="@+id/tb"
+        android:layout_below="@+id/ll"
         android:background="#ffffff"
         android:id="@+id/who"
+
         >
         <View
             android:layout_gravity="center"
@@ -147,7 +150,7 @@
         android:layout_width="match_parent"
         android:layout_height="43dp"
         android:layout_marginTop="17dp"
-        android:layout_below="@+id/tb"
+        android:layout_below="@+id/who"
         android:background="#ffffff"
         android:id="@+id/juece"
         >
@@ -194,8 +197,25 @@
         android:orientation="vertical"
         android:layout_marginLeft="7dp"
         android:layout_marginTop="10dp"
+        android:layout_below="@+id/juece"
         android:visibility="gone"
         android:id="@+id/ll_result">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="隐私分类结果："/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/fenlei"/>
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -208,13 +228,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="obj1-pred-obj2"/>
+                android:text=""
+                android:id="@+id/content"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="查看详情"
                 android:textColor="#5b6a92"
-                android:layout_marginLeft="7dp"/>
+                android:layout_marginLeft="7dp"
+                android:id="@+id/lookmore"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -253,4 +275,28 @@
                 android:id="@+id/advice_group"/>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="以下为您有可能泄露隐私的以往微博"
+            android:id="@+id/tixing"/>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/tixing"
+        >
+    </android.support.v7.widget.RecyclerView></RelativeLayout>
+</RelativeLayout>
