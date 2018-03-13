@@ -2,6 +2,8 @@ package com.example.bingnanfeng02.privacydetection.data;
 
 import org.litepal.crud.DataSupport;
 
+import java.util.Date;
+
 /**
  * Created by bingnanfeng02 on 2017/10/27.
  */
@@ -11,8 +13,9 @@ public class Pyq  {
     private String text;
     private int permission;
     private int id;
-    private boolean istest=false;
-
+    private String touxianglujing;
+    private String tuxianglujing;
+    private Date date;
     public String getName() {
         return name;
     }
@@ -45,11 +48,28 @@ public class Pyq  {
         this.id = id;
     }
 
-    public boolean istest() {
-        return istest;
+
+    public String getTouxianglujing() {
+        return touxianglujing;
     }
 
-    public void setIstest(boolean istest) {
-        this.istest = istest;
+    public void setTouxianglujing(String touxianglujing) {
+        this.touxianglujing = touxianglujing;
+    }
+
+    public String getTuxianglujing() {
+        return tuxianglujing;
+    }
+
+    public void setTuxianglujing(String tuxianglujing) {
+        this.tuxianglujing = tuxianglujing;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

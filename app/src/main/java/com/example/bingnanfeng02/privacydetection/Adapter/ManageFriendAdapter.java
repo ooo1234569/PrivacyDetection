@@ -16,8 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.bingnanfeng02.privacydetection.Constant;
 import com.example.bingnanfeng02.privacydetection.MyApplication;
 import com.example.bingnanfeng02.privacydetection.R;
+import com.example.bingnanfeng02.privacydetection.data.CheckFriend;
 
 import java.util.ArrayList;
 
@@ -28,24 +30,14 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class ManageFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final String[] dengji={"0","1","2","3","4","5"};
-    String[] friends;
     Context context;
-    int[][] permission;
+    int[] permission;
     int temp;
-    ArrayList<String> strings=new ArrayList<>();
-    ArrayList<Integer> integers=new ArrayList<>();
-    public ManageFriendAdapter(String[] friends,int[][] permission, Context context){
+    ArrayList<CheckFriend> friends=new ArrayList<>();
+    public ManageFriendAdapter(ArrayList<CheckFriend> friends,int[] permission, Context context){
         this.friends=friends;
         this.permission=permission;
         this.context=context;
-        for(int i=0;i<friends.length;i++){
-            if(friends[i]==((MyApplication)((Activity)context).getApplication()).friend[((MyApplication)((Activity)context).getApplication()).i]){
-                continue;
-            }
-            strings.add(friends[i]);
-            integers.add(i);
-        }
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -63,19 +55,18 @@ public class ManageFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     void inputpremission(final int i){
         temp=i;
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setSingleChoiceItems(dengji,permission[((MyApplication)((Activity) context).getApplication()).i][integers.get(i)],new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                temp=which;
-            }
-        });
-        builder.setTitle("设置"+friends[i]+"的朋友圈权限等级").setNegativeButton(
+//        builder.setSingleChoiceItems(dengji,permission[((MyApplication)((Activity) context).getApplication()).i][integers.get(i)],new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int which) {
+//                temp=which;
+//            }
+//        });
+        builder.setTitle("设置"+friends.get(i).getName()+"的朋友圈权限等级").setNegativeButton(
                 "取消", null);
         builder.setPositiveButton("确定",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         if(i!=temp){
-                            permission[((MyApplication)((Activity) context).getApplication()).i][integers.get(i)]=temp;
-                            notifyDataSetChanged();
+
                         }
                     }
                 });
@@ -84,9 +75,9 @@ public class ManageFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-         Glide.with(context).load(((MyApplication)((Activity)context).getApplication()).headimg[integers.get(position)]).into(((Friend)holder).headimg);
-        ((Friend)holder).name.setText(strings.get(position));
-        ((Friend)holder).permission.setText(permission[((MyApplication)((Activity) context).getApplication()).i][integers.get(position)]+"级");
+         Glide.with(context).load(Constant.wangzhi+friends.get(position).getTouxiang()).into(((Friend)holder).headimg);
+        ((Friend)holder).name.setText(friends.get(position).getName());
+        ((Friend)holder).permission.setText(friends.get(position).getPerimit()+"");
     }
 
     @Override

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.bingnanfeng02.privacydetection.Constant;
 import com.example.bingnanfeng02.privacydetection.MyApplication;
 import com.example.bingnanfeng02.privacydetection.R;
 import com.example.bingnanfeng02.privacydetection.Task.SendPyq;
@@ -61,33 +62,19 @@ public class PyqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Log.d("sss",position+"");
           if(holder instanceof Aboutme){
-              Glide.with(context).load(((MyApplication)((Activity)context).getApplication()).headimg[((MyApplication)((Activity)context).getApplication()).i]).into(((Aboutme)holder).bg);
-              Glide.with(context).load(((MyApplication)((Activity)context).getApplication()).headimg[((MyApplication)((Activity)context).getApplication()).i]).into(((Aboutme)holder).headimg);
-              ((Aboutme)holder).myname.setText(((MyApplication)((Activity)context).getApplication()).friend[((MyApplication)((Activity)context).getApplication()).i]);
+              Glide.with(context).load(((MyApplication)((Activity)context).getApplication()).touxiang).into(((Aboutme)holder).bg);
+              Glide.with(context).load(((MyApplication)((Activity)context).getApplication()).touxiang).into(((Aboutme)holder).headimg);
+              ((Aboutme)holder).myname.setText(((MyApplication)((Activity)context).getApplication()).email);
           }else {
-              if(pyqs.get(position+flag-1).istest()){
-                  Glide.with(context).load(R.drawable.img_headimg).into(((Pyq2)holder).img);
-              }else {
-                  ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                  Bitmap bitmap= SendPyq.returnBitmap();
-                  if(bitmap==null){
-                      bitmap=BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getPath()+"/a.jpg");
-                  }
-                  bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                  byte[] bytes=baos.toByteArray();
-                  Glide.with(context)
-                          .load(bytes)
-                          .into(((Pyq2)holder).img);
-              }
-              Glide.with(context).load(((MyApplication)((Activity)context).getApplication()).headimg[pyqs.get(position+flag-1).getId()]).into(((Pyq2)holder).headimg);
+              Glide.with(context).load(Constant.wangzhi+pyqs.get(position+flag-1).getTuxianglujing()).into(((Pyq2)holder).img);
+              Glide.with(context).load(Constant.wangzhi+pyqs.get(position+flag-1).getTouxianglujing()).into(((Pyq2)holder).headimg);
               ((Pyq2)holder).name.setText(pyqs.get(position+flag-1).getName());
               ((Pyq2)holder).text.setText(pyqs.get(position+flag-1).getText());
-              if(((MyApplication)((Activity)context).getApplication()).i==pyqs.get(position+flag-1).getId()){
-                  ((Pyq2)holder).permission.setText(pyqs.get(position+flag-1).getPermission()+"级权限");
-                  ((Pyq2)holder).permission.setVisibility(View.VISIBLE);
-              }
+              ((Pyq2) holder).permission.setText(pyqs.get(position + flag - 1).getPermission() + "级权限");
+              ((Pyq2) holder).time.setText(pyqs.get(position + flag - 1).getDate()+"");
+              ((Pyq2) holder).permission.setVisibility(View.VISIBLE);
+
           }
     }
 
@@ -115,6 +102,7 @@ public class PyqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView text;
         TextView name;
         TextView permission;
+        TextView time;
         public Pyq2(View itemView) {
             super(itemView);
             headimg=(ImageView)itemView.findViewById(R.id.headimg);
@@ -122,6 +110,7 @@ public class PyqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             name=(TextView)itemView.findViewById(R.id.name);
             text=(TextView)itemView.findViewById(R.id.text);
             permission=(TextView)itemView.findViewById(R.id.permission);
+            time=(TextView)itemView.findViewById(R.id.time);
         }
     }
     class Aboutme extends RecyclerView.ViewHolder {

@@ -7,7 +7,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.example.bingnanfeng02.privacydetection.Constant;
-import com.example.bingnanfeng02.privacydetection.data.DengluReturn;
+import com.example.bingnanfeng02.privacydetection.data.AddFriendReturn;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -19,34 +19,30 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by bingnanfeng02 on 2018/3/12.
+ * Created by bingnanfeng02 on 2018/3/13.
  */
 
-public class DengluTask extends AsyncTask {
-    private Handler handler;
+public class AddFriendTask  extends AsyncTask{
     private Context context;
-    private String password;
-    private String email;
-    public DengluTask( String email,String password, Handler handler, Context context){
-        this.handler=handler;
+    private Handler handler;
+    private String id;
+    public AddFriendTask(Context context, Handler handler,String id){
         this.context=context;
-        this.email=email;
-        this.password=password;
+        this.handler=handler;
+        this.id=id;
     }
     @Override
     protected Object doInBackground(Object[] params) {
         MultipartBody multipartBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("email", email)
-                .addFormDataPart("password",password)
+                .addFormDataPart("id",id)
                 .build();
-
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(1000, TimeUnit.SECONDS)
                 .connectTimeout(1000, TimeUnit.SECONDS)
                 .writeTimeout(1000, TimeUnit.SECONDS)
                 .build();
-        Log.d("denglu",Constant.denglu);
+        Log.d("addfriend", Constant.addfriend);
         Request request = new Request.Builder()
                 .url(Constant.denglu)
                 .post(multipartBody)
@@ -54,7 +50,7 @@ public class DengluTask extends AsyncTask {
         try {
             Response response=okHttpClient.newCall(request).execute();
             String s=response.body().string();
-            Log.d("denglujson",s);
+            Log.d("addfriendjson",s);
             parseJson(s);
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,16 +58,16 @@ public class DengluTask extends AsyncTask {
         return null;
     }
     void parseJson(String json){
-        Gson gson = new Gson();
-        DengluReturn dengluReturn;
+        Gson gson=new Gson();
+        AddFriendReturn addFriendReturn;
         try {
-            dengluReturn=gson.fromJson(json,DengluReturn.class);
+            addFriendReturn=gson.fromJson(json, AddFriendReturn.class);
         }catch (Exception e){
-            dengluReturn=null;
+            addFriendReturn=null;
         }
         Message message=new Message();
-        message.arg1=1;
-        message.obj=dengluReturn;
+        message.arg1=2;
+        message.obj=addFriendReturn;
         handler.sendMessage(message);
     }
 }
