@@ -1,49 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="800dp"
-        android:layout_centerVertical="true">
-<ImageView
-    android:layout_width="25dp"
-    android:layout_height="25dp"
-    android:layout_centerVertical="true"
-    android:layout_marginLeft="50dp"
-    android:id="@+id/img1"
-    android:src="@drawable/red_circle1"
-    />
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/img1"
-            android:layout_marginLeft="25dp"
-            android:id="@+id/img2"
-            android:src="@drawable/blue_circle"
-            />
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/img2"
-            android:layout_marginLeft="25dp"
-            android:id="@+id/img3"
-            android:src="@drawable/yellow_circle"
-            />
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/img3"
-            android:layout_marginLeft="25dp"
-            android:id="@+id/img4"
-            android:src="@drawable/green_circle"
-            /></RelativeLayout>
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:id="@+id/btn"/>
-</RelativeLayout>
+    android:background="#000000"
+    tools:context="com.example.bingnanfeng02.privacydetection.Activity.TestActivity">
+<com.example.bingnanfeng02.privacydetection.View.LoadingView
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:visibility="visible"/>
+</android.support.constraint.ConstraintLayout>

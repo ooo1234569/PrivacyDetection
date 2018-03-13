@@ -3,7 +3,6 @@ package com.example.bingnanfeng02.privacydetection;
 import android.app.Application;
 import android.content.SharedPreferences;
 
-import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by bingnanfeng02 on 2017/10/24.
@@ -21,7 +20,6 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        LeakCanary.install(this);
         SharedPreferences pref=getSharedPreferences("data",MODE_PRIVATE);
         ip=pref.getString("sendweibo","");
         port=pref.getString("port","");
