@@ -9,13 +9,11 @@ import android.content.SharedPreferences;
  */
 
 public class MyApplication extends Application {
-    public static  final  String[] friend={"Alice","Bob","Cindy"};
-    public static  final  int[] headimg={R.drawable.img_headimg1,R.drawable.img_headimg2,R.drawable.img_headimg3};
-    public static final int[][] perimission ={{6,1,5},{1,6,5},{1,5,6}};
     public  int i=0;
+    public String email="";
+    public String touxiang="";
     public String ip="";
     public String port="";
-    public String name;
     public boolean auto_fill;
     @Override
     public void onCreate() {
