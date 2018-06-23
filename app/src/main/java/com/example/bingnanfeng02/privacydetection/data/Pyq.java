@@ -1,27 +1,25 @@
 package com.example.bingnanfeng02.privacydetection.data;
 
-import org.litepal.crud.DataSupport;
-
-import java.util.Date;
+import java.util.List;
 
 /**
  * Created by bingnanfeng02 on 2017/10/27.
  */
 
 public class Pyq  {
-    private String name;
+    private String username;
     private String text;
-    private int permission;
+    private int level;
     private int id;
-    private String touxianglujing;
-    private String tuxianglujing;
-    private Date date;
-    public String getName() {
-        return name;
+    private String avatar;
+    private List<String> images;
+    private String published_time;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getText() {
@@ -32,12 +30,12 @@ public class Pyq  {
         this.text = text;
     }
 
-    public int getPermission() {
-        return permission;
+    public int getLevel() {
+        return level;
     }
 
-    public void setPermission(int permission) {
-        this.permission = permission;
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public int getId() {
@@ -49,27 +47,27 @@ public class Pyq  {
     }
 
 
-    public String getTouxianglujing() {
-        return touxianglujing;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setTouxianglujing(String touxianglujing) {
-        this.touxianglujing = touxianglujing;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
-    public String getTuxianglujing() {
-        return tuxianglujing;
+    public List<String> getImages() {
+        return images;
     }
 
-    public void setTuxianglujing(String tuxianglujing) {
-        this.tuxianglujing = tuxianglujing;
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
-    public Date getDate() {
-        return date;
+    public String getPublished_time() {
+        return published_time;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setPublished_time(String published_time) {
+        this.published_time = published_time;
     }
 }

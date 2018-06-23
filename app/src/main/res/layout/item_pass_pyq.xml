@@ -36,11 +36,11 @@
             android:text="炳楠"
             android:textSize="17sp"
             android:textColor="#5b6a92"
-            android:id="@+id/name"/>
+            android:id="@+id/username"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
+            android:layout_below="@+id/username"
             android:textSize="16sp"
             android:text="test"
             android:layout_marginTop="5dp"
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textSize="12sp"
-            android:id="@+id/permission"
+            android:id="@+id/detected_level"
             android:layout_toRightOf="@+id/time"
             android:layout_below="@+id/img"
             android:layout_marginTop="10dp"

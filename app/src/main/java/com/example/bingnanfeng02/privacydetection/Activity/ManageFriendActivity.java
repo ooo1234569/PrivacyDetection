@@ -1,56 +1,65 @@
 package com.example.bingnanfeng02.privacydetection.Activity;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.example.bingnanfeng02.privacydetection.Adapter.ManageFriendAdapter;
 import com.example.bingnanfeng02.privacydetection.Constant;
-import com.example.bingnanfeng02.privacydetection.MyApplication;
 import com.example.bingnanfeng02.privacydetection.R;
 import com.example.bingnanfeng02.privacydetection.Task.Task;
-import com.example.bingnanfeng02.privacydetection.data.AddFriendReturn;
-import com.example.bingnanfeng02.privacydetection.data.CheckFriend;
-import com.example.bingnanfeng02.privacydetection.data.DengluReturn;
+import com.example.bingnanfeng02.privacydetection.data.CCFriends;
+import com.example.bingnanfeng02.privacydetection.util.BaseHandler;
 
-import java.util.List;
-
-public class ManageFriendActivity extends BackActivity {
+public class ManageFriendActivity extends BackActivity implements BaseHandler.BaseHandlerCallBack{
     RecyclerView recyclerView;
     ManageFriendAdapter manageFriendAdapter;
-    List<CheckFriend> checkFriends;
-    public Handler handler=new Handler(){
-        public void handleMessage(Message msg_main) {
-            switch (msg_main.arg1){
-                case 1:
-                    if(msg_main!=null){
-                        checkFriends=(List<CheckFriend>)msg_main.obj;
-                        manageFriendAdapter=new ManageFriendAdapter(checkFriends,ManageFriendActivity.this);
-                        recyclerView.setAdapter(manageFriendAdapter);
-                    }else {
-                        Toast.makeText(ManageFriendActivity.this,"获取失败",Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                case 2:
-
-                    break;
-            }
-
-
-        }
-    };
+    CCFriends ccFriends;
+    public Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_friend);
+        handler= new BaseHandler(this);
         initback("管理好友分组");
         recyclerView=(RecyclerView)findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+    void init(){
+        ccFriends=new CCFriends();
         Task task=new Task();
-        task.execute(this,handler,null, checkFriends,Constant.managefriend,"managefriend");
+        task.execute(this,handler,null, ccFriends,Constant.managefriend,1,"managefriend");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        init();
+    }
+
+
+    @Override
+    public void callBack(Message msg_main) {
+        switch (msg_main.arg1){
+            case 1:
+                if(msg_main!=null&&msg_main.obj!=null){
+                    ccFriends=(CCFriends)msg_main.obj;
+                    manageFriendAdapter=new ManageFriendAdapter(ccFriends.getFriends(),ManageFriendActivity.this);
+                    recyclerView.setAdapter(manageFriendAdapter);
+                }else {
+                    Constant.show("获取失败");
+                }
+                break;
+            case 2:
+                if(((String)msg_main.obj).equals("success")){
+                    Constant.show("修改成功");
+                    init();
+                }else {
+                    Constant.show("修改失败");
+                }
+                break;
+        }
     }
 }

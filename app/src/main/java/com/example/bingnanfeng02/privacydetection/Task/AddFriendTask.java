@@ -23,11 +23,9 @@ import okhttp3.Response;
  */
 
 public class AddFriendTask  extends AsyncTask{
-    private Context context;
     private Handler handler;
     private String id;
     public AddFriendTask(Context context, Handler handler,String id){
-        this.context=context;
         this.handler=handler;
         this.id=id;
     }
@@ -38,13 +36,14 @@ public class AddFriendTask  extends AsyncTask{
                 .addFormDataPart("id",id)
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .readTimeout(1000, TimeUnit.SECONDS)
-                .connectTimeout(1000, TimeUnit.SECONDS)
-                .writeTimeout(1000, TimeUnit.SECONDS)
+                .readTimeout(2, TimeUnit.SECONDS)
+                .connectTimeout(2, TimeUnit.SECONDS)
+                .writeTimeout(2, TimeUnit.SECONDS)
                 .build();
         Log.d("addfriend", Constant.addfriend);
         Request request = new Request.Builder()
                 .url(Constant.denglu)
+                .addHeader("cookie",Constant.cookie)
                 .post(multipartBody)
                 .build();
         try {

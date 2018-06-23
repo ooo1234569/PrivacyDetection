@@ -1,4 +1,4 @@
-package com.example.bingnanfeng02.privacydetection;
+package com.example.bingnanfeng02.privacydetection.data;
 
 /**
  * Created by bingnanfeng02 on 2017/10/22.

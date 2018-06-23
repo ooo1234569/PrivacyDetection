@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl"
     >
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_layout"
@@ -91,7 +92,7 @@
         android:background="#e4e4e4"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:layout_below="@+id/ll"
+        android:layout_below="@+id/appbar_layout"
         android:id="@+id/view"/>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
@@ -102,7 +103,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:id="@+id/addrule">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

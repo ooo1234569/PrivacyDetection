@@ -1,4 +1,4 @@
-package com.example.bingnanfeng02.privacydetection;
+package com.example.bingnanfeng02.privacydetection.View;
 
 import android.content.Context;
 import android.graphics.Bitmap;

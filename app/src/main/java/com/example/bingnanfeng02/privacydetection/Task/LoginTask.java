@@ -11,6 +11,7 @@ import com.example.bingnanfeng02.privacydetection.data.DengluReturn;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.MultipartBody;
@@ -22,14 +23,12 @@ import okhttp3.Response;
  * Created by bingnanfeng02 on 2018/3/12.
  */
 
-public class DengluTask extends AsyncTask {
+public class LoginTask extends AsyncTask {
     private Handler handler;
-    private Context context;
     private String password;
     private String email;
-    public DengluTask( String email,String password, Handler handler, Context context){
+    public LoginTask(String email, String password, Handler handler, Context context){
         this.handler=handler;
-        this.context=context;
         this.email=email;
         this.password=password;
     }
@@ -37,14 +36,14 @@ public class DengluTask extends AsyncTask {
     protected Object doInBackground(Object[] params) {
         MultipartBody multipartBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("email", email)
+                .addFormDataPart("username", email)
                 .addFormDataPart("password",password)
                 .build();
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .readTimeout(1000, TimeUnit.SECONDS)
-                .connectTimeout(1000, TimeUnit.SECONDS)
-                .writeTimeout(1000, TimeUnit.SECONDS)
+                .readTimeout(2, TimeUnit.SECONDS)
+                .connectTimeout(2, TimeUnit.SECONDS)
+                .writeTimeout(2, TimeUnit.SECONDS)
                 .build();
         Log.d("denglu",Constant.denglu);
         Request request = new Request.Builder()
@@ -53,11 +52,15 @@ public class DengluTask extends AsyncTask {
                 .build();
         try {
             Response response=okHttpClient.newCall(request).execute();
+            Constant.cookie=response.header("Set-Cookie");
             String s=response.body().string();
             Log.d("denglujson",s);
             parseJson(s);
         } catch (IOException e) {
-            e.printStackTrace();
+            if(e instanceof SocketTimeoutException){
+                parseJson(null);
+                Log.d("ss","timele");
+            }
         }
         return null;
     }

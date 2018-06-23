@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:orientation="horizontal">
 <TextView
     android:layout_width="wrap_content"
@@ -27,46 +27,46 @@
         android:background="#000000"
         android:layout_centerVertical="true"></View>
         </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="behindof"
-            android:textSize="22sp"
-            android:id="@+id/predicate"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
-        <View
-            android:layout_width="0.1dp"
-            android:layout_height="15dp"
-            android:layout_alignParentRight="true"
-            android:background="#000000"
-            android:layout_centerVertical="true"></View>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="person"
-            android:textSize="22sp"
-            android:id="@+id/obj2"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
-        <View
-            android:layout_width="0.1dp"
-            android:layout_height="15dp"
-            android:layout_alignParentRight="true"
-            android:background="#000000"
-            android:layout_centerVertical="true"></View>
-    </RelativeLayout>
+    <!--<RelativeLayout-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:orientation="horizontal">-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="behindof"-->
+            <!--android:textSize="22sp"-->
+            <!--android:id="@+id/predicate"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_centerHorizontal="true"/>-->
+        <!--<View-->
+            <!--android:layout_width="0.1dp"-->
+            <!--android:layout_height="15dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:background="#000000"-->
+            <!--android:layout_centerVertical="true"></View>-->
+    <!--</RelativeLayout>-->
+    <!--<RelativeLayout-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:orientation="horizontal">-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="person"-->
+            <!--android:textSize="22sp"-->
+            <!--android:id="@+id/obj2"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_centerHorizontal="true"/>-->
+        <!--<View-->
+            <!--android:layout_width="0.1dp"-->
+            <!--android:layout_height="15dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:background="#000000"-->
+            <!--android:layout_centerVertical="true"></View>-->
+    <!--</RelativeLayout>-->
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:text="2级权限"
             android:textSize="22sp"
-            android:id="@+id/level"
+            android:id="@+id/detected_level"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"/>
         <View

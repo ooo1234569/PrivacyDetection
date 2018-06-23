@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,10 +12,12 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
-
 import com.example.bingnanfeng02.privacydetection.Adapter.SelectViewAdapter;
 import com.example.bingnanfeng02.privacydetection.CallBack.SelectPositionListener;
 import com.example.bingnanfeng02.privacydetection.R;
+
+
+
 
 
 /**
@@ -31,10 +32,10 @@ public class SelectView extends PopupWindow {
     private RelativeLayout cancel;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
-    public  void setPositionListener(SelectPositionListener selectPositionListener){
+    public  void setListener(SelectPositionListener selectPositionListener){
         this.selectPositionListener = selectPositionListener;
     }
-    public SelectView(Context context,String[] texts){
+    public SelectView(Context context, String[] texts){
         this.context=context;
         this.texts=texts;
         lp = ((Activity)context).getWindow().getAttributes();

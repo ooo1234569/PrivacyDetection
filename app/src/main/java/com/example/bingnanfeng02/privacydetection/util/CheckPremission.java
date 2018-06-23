@@ -15,7 +15,8 @@ public class CheckPremission {
     private static String[] PERMISSIONS_REQ = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA
+            Manifest.permission.CAMERA,
+            Manifest.permission.RECORD_AUDIO
     };
     private static boolean verifyPermissions(Activity activity) {
         for(int i=0;i<PERMISSIONS_REQ.length;i++){

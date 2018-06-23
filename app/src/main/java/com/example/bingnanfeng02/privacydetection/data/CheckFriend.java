@@ -5,31 +5,40 @@ package com.example.bingnanfeng02.privacydetection.data;
  */
 
 public class CheckFriend {
-    private String name;
-    private int perimit;
-    private String touxiang;
+    private String username;
+    private int level;
+    private String avatar;
+    private int id;
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public int getPerimit() {
-        return perimit;
+    public int getLevel() {
+        return level;
     }
 
-    public void setPerimit(int perimit) {
-        this.perimit = perimit;
+    public void setLevel(int level) {
+        this.level = level;
     }
 
-    public String getTouxiang() {
-        return touxiang;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setTouxiang(String touxiang) {
-        this.touxiang = touxiang;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

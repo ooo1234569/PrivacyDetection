@@ -4,39 +4,31 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.bingnanfeng02.privacydetection.GetBitmap1;
-import com.example.bingnanfeng02.privacydetection.GetBitmap2;
+import com.example.bingnanfeng02.privacydetection.View.GetBitmap1;
+import com.example.bingnanfeng02.privacydetection.View.GetBitmap2;
 import com.example.bingnanfeng02.privacydetection.R;
 import com.example.bingnanfeng02.privacydetection.Task.SendPyq;
 import com.example.bingnanfeng02.privacydetection.View.GetBm;
-import com.example.bingnanfeng02.privacydetection.data.SendPyqReturn;
+import com.example.bingnanfeng02.privacydetection.data.DetectPyqReturn;
+import com.example.bingnanfeng02.privacydetection.util.BaseHandler;
 import com.example.bingnanfeng02.privacydetection.util.GetpxOrdp;
 
 import java.util.ArrayList;
 
-public class NewSendActivity extends AppCompatActivity implements View.OnClickListener {
-    Handler handler=new Handler(){
-        public void handleMessage(Message msg_main) {
-            findViewById(R.id.ll_result).setVisibility(View.VISIBLE);
-            SendPyqReturn spq=(SendPyqReturn)msg_main.obj;
-            ratingBar.setRating(s.getLevel());
-            content.setText(s.getContent());
-            fenlei.setText(s.getPrivacy());
-            advice_group.setText(s.getPrivacy());
-            s=spq;
-        }
-    };
+public class SendActivity extends AppCompatActivity implements View.OnClickListener,BaseHandler.BaseHandlerCallBack{
+    Handler handler;
     private static final String[] dengji={"公开","1级以上","2级以上","3级以上","4级以上","5级","仅自己"};
     GetBm getBitmap;
     Bitmap bitmap;
@@ -49,14 +41,17 @@ public class NewSendActivity extends AppCompatActivity implements View.OnClickLi
     private TextView advice_group;
     private EditText add_content;
     private TextView content;
+    private TextView matched_rule;
     private TextView fenlei;
     private TextView lookmore;
-    private SendPyqReturn s;
+    private TextView advice_level;
+    private DetectPyqReturn detectPyqReturn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_send);
+        handler=new BaseHandler<>(this);
         findid();
         setListener();
         if(getIntent().getIntExtra("sdk",0)==1){
@@ -79,6 +74,8 @@ public class NewSendActivity extends AppCompatActivity implements View.OnClickLi
         content=(TextView)findViewById(R.id.content);
         fenlei=(TextView)findViewById(R.id.fenlei);
         lookmore=(TextView)findViewById(R.id.lookmore);
+        matched_rule=(TextView)findViewById(R.id.ruleresult);
+        advice_level=(TextView)findViewById(R.id.advice_level);
     }
     void setListener(){
         findViewById(R.id.cancel).setOnClickListener(this);
@@ -109,17 +106,24 @@ public class NewSendActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void send() {
+        if(detectPyqReturn!=null){
+            SendPyq sendPyq =new SendPyq(null,null,handler,this);
+            sendPyq.execute(2,detectPyqReturn.getId());
+        }
+
     }
     private void lookmore() {
         Intent i = new Intent(this, ViewImageActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putStringArrayList("urls", (ArrayList<String>) s.getStringList());
+        ArrayList<String> arrayList=new ArrayList<>();
+        arrayList.add(detectPyqReturn.getDetected());
+        bundle.putStringArrayList("urls", arrayList);
         i.putExtras(bundle);
         startActivity(i);
     }
     void juece(){
-        SendPyq sendPyq =new SendPyq(bitmap,add_content.getText().toString(),handler,this);
-        sendPyq.execute();
+        SendPyq sendPyq =new SendPyq(bitmap,add_content.getText().toString()+"",handler,this);
+        sendPyq.execute(1);
     }
     void ckeck_premission(){
         temp=temp2;
@@ -143,5 +147,26 @@ public class NewSendActivity extends AppCompatActivity implements View.OnClickLi
                     }
                 });
         builder.show();
+    }
+
+    @Override
+    public void callBack(Message msg_main) {
+        if(msg_main.arg1==1){
+            Toast.makeText(SendActivity.this,"检测成功",Toast.LENGTH_SHORT).show();
+            detectPyqReturn=(DetectPyqReturn)msg_main.obj;
+            findViewById(R.id.ll_result).setVisibility(View.VISIBLE);
+            content.setText(detectPyqReturn.getContent());
+            ratingBar.setRating(detectPyqReturn.getDetected_level());
+            advice_group.setText(detectPyqReturn.getPrivacy());
+            matched_rule.setText(detectPyqReturn.getMatched_rule());
+            advice_level.setText(detectPyqReturn.getRecommend_level()+"");
+        }else {
+            if(msg_main.obj.equals("success")){
+                Toast.makeText(SendActivity.this,"发送成功",Toast.LENGTH_SHORT).show();
+                finish();
+            }else {
+                Toast.makeText(SendActivity.this,"发送失败",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

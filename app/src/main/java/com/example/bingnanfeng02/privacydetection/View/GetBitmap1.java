@@ -1,12 +1,10 @@
-package com.example.bingnanfeng02.privacydetection;
+package com.example.bingnanfeng02.privacydetection.View;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-
-import com.example.bingnanfeng02.privacydetection.View.GetBm;
 
 import java.io.FileNotFoundException;
 

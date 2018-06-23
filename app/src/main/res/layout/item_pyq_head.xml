@@ -19,7 +19,7 @@
         android:textSize="20sp"
         android:layout_toLeftOf="@+id/headimg"
         android:layout_marginRight="13dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/myname"
         />
     <ImageView

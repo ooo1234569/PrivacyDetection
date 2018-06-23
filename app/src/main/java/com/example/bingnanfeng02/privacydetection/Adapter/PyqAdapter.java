@@ -2,10 +2,9 @@ package com.example.bingnanfeng02.privacydetection.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.graphics.Point;
-import android.os.Environment;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,14 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.bingnanfeng02.privacydetection.Activity.ViewImageActivity;
 import com.example.bingnanfeng02.privacydetection.Constant;
 import com.example.bingnanfeng02.privacydetection.MyApplication;
 import com.example.bingnanfeng02.privacydetection.R;
-import com.example.bingnanfeng02.privacydetection.Task.SendPyq;
 import com.example.bingnanfeng02.privacydetection.data.Pyq;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by bingnanfeng02 on 2017/10/24.
@@ -30,9 +29,9 @@ import java.util.ArrayList;
 
 public class PyqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
-    ArrayList<Pyq> pyqs;
+    List<Pyq> pyqs;
     int flag;
-    public PyqAdapter(Context context, ArrayList<Pyq> pyqs,int flag){
+    public PyqAdapter(Context context, List<Pyq> pyqs,int flag){
         this.context=context;
         this.pyqs=pyqs;
         this.flag=flag;
@@ -46,7 +45,17 @@ public class PyqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 return aboutme;
             }else {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pyq,parent,false);
-                Pyq2 pyq2=new Pyq2(view);
+                final Pyq2 pyq2=new Pyq2(view);
+                pyq2.img.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(context, ViewImageActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putStringArrayList("urls", (ArrayList)pyqs.get(pyq2.getAdapterPosition()-1).getImages());
+                        i.putExtras(bundle);
+                        context.startActivity(i);
+                    }
+                });
                 return pyq2;
             }
         }else {
@@ -61,18 +70,32 @@ public class PyqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        super.onViewRecycled(holder);
+        if(holder instanceof Pyq2){
+            ((Pyq2)holder).img.setVisibility(View.VISIBLE);
+
+        }
+    }
+
+    @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        Log.d("sss",position+"");
           if(holder instanceof Aboutme){
               Glide.with(context).load(Constant.wangzhi+((MyApplication)((Activity)context).getApplication()).touxiang).into(((Aboutme)holder).bg);
               Glide.with(context).load(Constant.wangzhi+((MyApplication)((Activity)context).getApplication()).touxiang).into(((Aboutme)holder).headimg);
               ((Aboutme)holder).myname.setText(((MyApplication)((Activity)context).getApplication()).email);
           }else {
-              Glide.with(context).load(Constant.wangzhi+pyqs.get(position+flag-1).getTuxianglujing()).into(((Pyq2)holder).img);
-              Glide.with(context).load(Constant.wangzhi+pyqs.get(position+flag-1).getTouxianglujing()).into(((Pyq2)holder).headimg);
-              ((Pyq2)holder).name.setText(pyqs.get(position+flag-1).getName());
+              if(pyqs.get(position+flag-1).getImages().size()!=0){
+                  Glide.with(context).load(Constant.wangzhi+pyqs.get(position+flag-1).getImages().get(0)).into(((Pyq2)holder).img);
+              }else {
+                  ((Pyq2)holder).img.setVisibility(View.GONE);
+              }
+              Glide.with(context).load(Constant.wangzhi+pyqs.get(position+flag-1).getAvatar()).into(((Pyq2)holder).headimg);
+              ((Pyq2)holder).name.setText(pyqs.get(position+flag-1).getUsername());
               ((Pyq2)holder).text.setText(pyqs.get(position+flag-1).getText());
-              ((Pyq2) holder).permission.setText(pyqs.get(position + flag - 1).getPermission() + "级权限");
-              ((Pyq2) holder).time.setText(pyqs.get(position + flag - 1).getDate()+"");
+              ((Pyq2) holder).permission.setText(pyqs.get(position + flag - 1).getLevel() + "级权限");
+              ((Pyq2) holder).time.setText(pyqs.get(position + flag - 1).getPublished_time()+"");
               ((Pyq2) holder).permission.setVisibility(View.VISIBLE);
 
           }
@@ -107,9 +130,9 @@ public class PyqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(itemView);
             headimg=(ImageView)itemView.findViewById(R.id.headimg);
             img=(ImageView)itemView.findViewById(R.id.img);
-            name=(TextView)itemView.findViewById(R.id.name);
+            name=(TextView)itemView.findViewById(R.id.username);
             text=(TextView)itemView.findViewById(R.id.text);
-            permission=(TextView)itemView.findViewById(R.id.permission);
+            permission=(TextView)itemView.findViewById(R.id.detected_level);
             time=(TextView)itemView.findViewById(R.id.time);
         }
     }

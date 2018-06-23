@@ -7,11 +7,14 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -31,12 +34,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".Test.ResultActivity" />
-        <activity android:name=".Activity.PyqActivity"> <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".Activity.PyqActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <category android:name="android.intent.category.DEFAULT" />
-    </intent-filter>
-    </activity>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -50,13 +54,6 @@
 
         <activity android:name=".Activity.SettingActivity" />
         <activity android:name=".Activity.ManageFriendActivity" />
-        <activity android:name=".Test.TestActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity android:name=".Activity.SetRuleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,13 +61,69 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.NewSendActivity">
+        <activity android:name=".Activity.SendActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.ViewImageActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Test.car.CarActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--<activity android:name=".Test.T">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+        <!--<service-->
+            <!--android:name=".Test.ListenService"-->
+            <!--android:exported="true"-->
+            <!--android:isolatedProcess="true" />-->
+        <!--<service-->
+            <!--android:name=".Test.MyService"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true"-->
+            <!--android:isolatedProcess="true" />-->
+
+        <!--<receiver-->
+            <!--android:name=".Test.WifiReceiver"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.net.wifi.WIFI_STATE_CHANGED" />-->
+                <!--<action android:name="android.net.wifi.STATE_CHANGE" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+        <!--<receiver-->
+            <!--android:name=".Test.WF"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true">-->
+            <!--<intent-filter android:priority="10000">-->
+                <!--<action android:name="android.net.wifi.WIFI_STATE_CHANGED" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+
+        <!--<activity android:name=".Test.LikeViewPackage.LikeViewActivity">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
     </application>
 
 </manifest>

@@ -11,7 +11,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="昵称:"
+            android:text="规则内容:"
             android:textSize="15sp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/idtext"
-            android:id="@+id/idet"
+            android:id="@+id/ruleet"
             /></RelativeLayout>
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="密码:"
+            android:text="权限:"
             android:textSize="15sp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/permitext"
-            android:inputType="textPassword"
-            android:id="@+id/password"
+            android:inputType="number"
+            android:id="@+id/permiset"
             /></RelativeLayout>
 </LinearLayout>

@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.bingnanfeng02.privacydetection.Activity.ManageFriendActivity;
 import com.example.bingnanfeng02.privacydetection.Activity.SetRuleActivity;
+import com.example.bingnanfeng02.privacydetection.Constant;
 import com.example.bingnanfeng02.privacydetection.MyApplication;
 import com.example.bingnanfeng02.privacydetection.R;
 
@@ -69,12 +69,32 @@ public class SettingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         builder.setPositiveButton("确定",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences.Editor editor=context.getSharedPreferences("data",MODE_PRIVATE).edit();
-                        ((MyApplication)((Activity) context).getApplication()).ip=ipet.getText().toString();
-                        ((MyApplication)((Activity) context).getApplication()).port=portet.getText().toString();
-                        editor.putString("sendweibo",((MyApplication)((Activity) context).getApplication()).ip);
-                        editor.putString("port",((MyApplication)((Activity) context).getApplication()).port);
-                        editor.apply();
+                        if(!ipet.getText().toString().equals("")&&!portet.getText().toString().equals("")){
+                            SharedPreferences.Editor editor=context.getSharedPreferences("data",MODE_PRIVATE).edit();
+                            Constant.ipp=ipet.getText().toString();
+                            Constant.ip="http://"+Constant.ipp;
+                            Constant.port=Integer.valueOf(portet.getText().toString());
+                            ((MyApplication)((Activity) context).getApplication()).ip=Constant.ipp;
+                            ((MyApplication)((Activity) context).getApplication()).port=Constant.port+"";
+                            editor.putString("sendweibo",((MyApplication)((Activity) context).getApplication()).ip);
+                            editor.putString("port",((MyApplication)((Activity) context).getApplication()).port);
+                            editor.apply();
+                            Constant.sendweibo=Constant.ip+":"+Constant.port+"/user/microblog/send";
+                            Constant.denglu =Constant.ip+":"+Constant.port+"/auth/login";
+                            Constant.dengchu =Constant.ip+":"+Constant.port+"/auth/logout";
+                            Constant.addfriend =Constant.ip+":"+Constant.port+"/user/friend/add";
+                            Constant.managefriend=Constant.ip+":"+Constant.port+"/user/friend/all";
+                            Constant.updatepremi=Constant.ip+":"+Constant.port+"/user/friend/level";
+                            Constant.checkpyq=Constant.ip+":"+Constant.port+"/user/friend/microblog";
+                            Constant.detect=Constant.ip+":"+Constant.port+"/user/microblog/detect";
+                            Constant.wangzhi= Constant.ip +":"+Constant.port;
+                            Constant.sendpyq=Constant.ip+":"+Constant.port+"/user/microblog/send/";
+                            Constant.addrule=Constant.ip+":"+Constant.port+"/user/rule/add";
+                            Constant.getrule=Constant.ip+":"+Constant.port+"/user/rule/all";
+                            Constant.deleterule=Constant.ip+":"+Constant.port+"/user/rule/remove/";
+                            Constant.updaterule=Constant.ip+":"+Constant.port+"/user/rule/update";
+                        }
+
 
                     }
                 });
